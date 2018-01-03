@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "system",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "outFile": "simplepolation.js",
+        "importHelpers": true,
+        "lib": [
+            "es2016",
+            "dom",
+            "es5"
+        ],
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "compileOnSave": true,
+    "include": [
+        "lib/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "example/*"
+    ]
+}
