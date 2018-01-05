@@ -22,17 +22,7 @@ export class SimplePolationInstance {
             setContextValueValue: value
         };
         let o = this.evalWithLog(path + '=setContextValueValue', context, extraContext);
-        o = value;
-        /*const pathSplit = path.split('.');
-        let resultContext = context;
-         
-        pathSplit.forEach((e, i) => {
-            if (i == pathSplit.length - 1) {
-                resultContext[e] = value;
-            } else {
-                resultContext = resultContext[e];
-            }
-        });*/
+        o = value; 
     }
 
     private evalWithLog(text: any, context: any, extraContext?: any): any {
@@ -59,7 +49,7 @@ export class SimplePolationInstance {
             let pre = '';
             Object.keys(context).forEach(function (key, index) {
                 pre += "var " + key + " = this." + key + ";";
-            }); 
+            });
             return eval(pre + text);
         }
 
