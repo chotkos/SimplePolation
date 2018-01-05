@@ -43,16 +43,36 @@ define("SimplePolation", ["require", "exports", "model/Interpolation", "jquery"]
             this.attachEventHandlers(context);
         };
         SimplePolationInstance.prototype.setContextValue = function (path, context, value) {
-            var pathSplit = path.split(/\.|\[("|')?|(\"|\')?\]/gm);
-            var resultContext = context;
-            pathSplit.forEach(function (e, i) {
-                if (i == pathSplit.length - 1) {
-                    resultContext[e] = value;
-                }
-                else {
-                    resultContext = resultContext[e];
-                }
-            });
+            var extraContext = {
+                setContextValueValue: value
+            };
+            var o = this.evalWithLog(path + '=setContextValueValue', context, extraContext);
+            o = value;
+        };
+        SimplePolationInstance.prototype.evalWithLog = function (text, context, extraContext) {
+            var result = null;
+            if (extraContext) {
+                Object.keys(extraContext).forEach(function (key, index) {
+                    context[key] = extraContext[key];
+                });
+            }
+            try {
+                result = this.evalInContext(text, context);
+            }
+            catch (e) {
+                throw new Error('Failed to evaluate pharse "' + text + '"');
+            }
+            return result;
+        };
+        SimplePolationInstance.prototype.evalInContext = function (text, context) {
+            function evalSafely(text) {
+                var pre = '';
+                Object.keys(context).forEach(function (key, index) {
+                    pre += "var " + key + " = this." + key + ";";
+                });
+                return eval(pre + text);
+            }
+            return evalSafely.call(context, text);
         };
         SimplePolationInstance.prototype.setWatchOnContextValue = function (path, context, callback) {
             var pathSplit = path.split('.');
